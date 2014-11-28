@@ -1,0 +1,13 @@
+                                        | time (s)    | ops/s     | %pct chg
+array.forEach                           |	0.695366052 |	1.44E+07		
+Array.prototype.forEach on array        |	0.740159474 |	1.35E+07 |	 -6.05%
+Array.prototype.forEach on Float32Array |	1.368684138 |	7.31E+06 |	-49.19%
+Array.prototype.forEach on PowerArray   |	0.751636273 |	1.33E+07 |	 -7.49%
+powerArray.forEach                      |	0.175532694 |	5.70E+07 |  296.15%
+fast.js on Array                        |	0.184384148 |	5.42E+07 |	277.13%
+fast.js on Float32Array                 |	6.121523157 |	1.63E+06 |	-88.64%
+fast.js on PowerArray                   |	0.182967407 |	5.47E+07 |	280.05%
+underscore on Array                     |	0.179662224 |	5.57E+07 |	287.04%
+underscore on Float32Array              |	0.246603782 |	4.06E+07 |	181.98%
+lodash on Array                         |	0.182177956 | 5.49E+07 |	281.70%
+lodash on Float32Array                  |	0.245795857 |	4.07E+07 |	182.90%
