@@ -57,17 +57,23 @@ suite
   });
 })
 
+.add('PowerArray.prototype.forEach on Uint16Array', function() {
+  PowerArray.prototype.forEach.call(iarray, function (i) {
+    i * 2;
+  });
+})
+
 .add('fast.js on Array', function() {
   fast.forEach(array,function (i) {
     i * 2;
   });
 })
 
-.add('fast.js on Uint16Array', function() {
+/*.add('fast.js on Uint16Array', function() {  // fast.js treats non-instanceof Arrays as objects
   fast.forEach(iarray,function (i) {
     i * 2;
   });
-})
+}) */
 
 .add('fast.js on PowerArray', function() {
   fast.forEach(parray,function (i) {
