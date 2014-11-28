@@ -1,3 +1,4 @@
+var Benchmark = require('benchmark');
 
 var PowerArray = require('PowerArray'),
     fast = require('fast.js'),
@@ -8,41 +9,8 @@ var i,
   LEN = 1e7,
   array = Array();
 
-function format(s) {
-  return (s[0] * 1e3 + s[1] / 1e6) / 1e3;
-}
-
-function ops_per_sec(s) {
-  return (LEN / format(s)).toExponential();
-}
-
-function report(s,t) {
-  console.log(s+' complete in ' + format(t) + ', ops/s: ' + ops_per_sec(t));
-}
-
-function bench(s, fn, n) {
-  var t = process.hrtime();
-  fn();
-  t = process.hrtime(t);
-  var ops = ops_per_sec(t);
-  n = n || ops;
-
-  s += '\t' + format(t) + ' s\t' + ops + ' ops/s';
-  s += '\t( '+Math.round((ops-n)/n*100, 2)+'% )'
-  console.log(s);
-  return ops;
-}
-
-function xbench(s) {
-  //console.log(s+' (pending)');
-};
-
-function rand() {
-  return Math.floor(Math.random() * 100 + 1);
-}
-
 for (i=0; i < LEN; i++) {
-  var rnd = rand();
+  var rnd = Math.floor(Math.random() * 100 + 1);
   array.push(rnd);
 
   var p = i/LEN*100;
@@ -52,77 +20,90 @@ for (i=0; i < LEN; i++) {
 }
 
 var parray = new PowerArray(array);
-var farray = new Float32Array(array);
+var iarray = new Uint16Array(array);
 
-var n = bench('array.forEach', function() {
+var suite = new Benchmark.Suite;
+
+suite
+
+.add('array.forEach', function() {
   array.forEach(function (i) {
     i * 2;
   });
-});
+})
 
-bench('Array.prototype.forEach on array', function() {
+.add('Array.prototype.forEach on array', function() {
   Array.prototype.forEach.call(array,function (i) {
     i * 2;
   });
-}, n);
+})
 
-bench('Array.prototype.forEach on Float32Array', function() {
-  Array.prototype.forEach.call(farray,function (i) {
+.add('Array.prototype.forEach on Uint16Array', function() {
+  Array.prototype.forEach.call(iarray,function (i) {
     i * 2;
   });
-}, n);
+})
 
-bench('Array.prototype.forEach on PowerArray', function() {
+.add('Array.prototype.forEach on PowerArray', function() {
   Array.prototype.forEach.call(parray, function (i) {
     i * 2;
   });
-}, n);
+})
 
 
-bench('powerArray.forEach', function() {
+.add('powerArray.forEach', function() {
   parray.forEach(function (i) {
     i * 2;
   });
-}, n);
+})
 
-bench('fast.js on Array', function() {
+.add('fast.js on Array', function() {
   fast.forEach(array,function (i) {
     i * 2;
   });
-}, n);
+})
 
-bench('fast.js on Float32Array', function() {
-  fast.forEach(farray,function (i) {
+.add('fast.js on Uint16Array', function() {
+  fast.forEach(iarray,function (i) {
     i * 2;
   });
-}, n);
+})
 
-bench('fast.js on PowerArray', function() {
+.add('fast.js on PowerArray', function() {
   fast.forEach(parray,function (i) {
     i * 2;
   });
-}, n);
+})
 
-bench('underscore on Array', function() {
+.add('underscore on Array', function() {
   _.forEach(array,function (i) {
     i * 2;
   });
-}, n);
+})
 
-bench('underscore on Float32Array', function() {
-  _.forEach(farray,function (i) {
+.add('underscore on Uint16Array', function() {
+  _.forEach(iarray,function (i) {
     i * 2;
   });
-}, n);
+})
 
-bench('lodash on Array', function() {
+.add('lodash on Array', function() {
   lodash.forEach(array,function (i) {
     i * 2;
   });
-}, n);
+})
 
-bench('lodash on Float32Array', function() {
-  lodash.forEach(farray,function (i) {
+.add('lodash on Uint16Array', function() {
+  lodash.forEach(iarray,function (i) {
     i * 2;
   });
-}, n);
+})
+
+.on('cycle', function(event) {
+  console.log(String(event.target));
+})
+.on('complete', function() {
+  console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+})
+
+.run({ 'async': true });
