@@ -4,11 +4,15 @@ console.log('\n# forEach');
 var Benchmark = require('benchmark');
 
 var PowerArray = require('PowerArray'),
+    BoostArray = require('./lib/BoostArray'),
     fast = require('fast.js'),
-    _ = require('underscore')
-    lodash = require('lodash');
+    _ = require('underscore'),
+    lodash = require('lodash'),
+    ramda = require('ramda');
 
-var fastForEach = require('fast.js/array/forEach')
+var fastForEach = require('fast.js/array/forEach');
+
+require('./lib/PoweredArray');
 
 //var assert = require('assert');
 
@@ -28,6 +32,7 @@ for (i=0; i < LEN; i++) {
 
 var parray = new PowerArray(array);
 var iarray = new Uint16Array(array);
+var barray = BoostArray(array.slice(0));
 
 var eachFn = function (i) {
   i * 2;
@@ -52,7 +57,7 @@ suite
   array.forEach(eachFn);
 })
 
-.add('Array.prototype.forEach on array', function() {
+/* .add('Array.prototype.forEach on array', function() {
   Array.prototype.forEach.call(array,eachFn);
 })
 
@@ -62,42 +67,54 @@ suite
 
 .add('Array.prototype.forEach on PowerArray', function() {
   Array.prototype.forEach.call(parray, eachFn);
+}) */
+
+.add('array.$forEach', function() {
+  array.$forEach(eachFn);
 })
 
 .add('powerArray.forEach', function() {
   parray.forEach(eachFn);
 })
 
-.add('PowerArray.prototype.forEach on Uint16Array', function() {
-  PowerArray.prototype.forEach.call(iarray, eachFn);
+.add('boostArray.$forEach', function() {
+  barray.$forEach(eachFn);
 })
 
-.add('fast.forEach on Array', function() {
+//.add('PowerArray.prototype.forEach on Uint16Array', function() {
+//  PowerArray.prototype.forEach.call(iarray, eachFn);
+//})
+
+.add('fast.forEach', function() {
   fast.forEach(array,eachFn);
 })
 
-.add('fast.forEach on Uint16Array', function() {  // fast.forEach treats non-instanceof Arrays as objects
-  fastForEach(iarray,eachFn);
-})
+//.add('fast.forEach on Uint16Array', function() {  // fast.forEach treats non-instanceof Arrays as objects
+//  fastForEach(iarray,eachFn);
+//})
 
-.add('fast.forEach on PowerArray', function() {
-  fast.forEach(parray,eachFn);
-})
+//.add('fast.forEach on PowerArray', function() {
+//  fast.forEach(parray,eachFn);
+//})
 
-.add('underscore.forEach on Array', function() {
+.add('underscore.forEach', function() {
   _.forEach(array,eachFn);
 })
 
-.add('underscore.forEach on Uint16Array', function() {
-  _.forEach(iarray,eachFn);
-})
+//.add('underscore.forEach on Uint16Array', function() {
+//  _.forEach(iarray,eachFn);
+//})
 
-.add('lodash.forEach on Array', function() {
+.add('lodash.forEach', function() {
   lodash.forEach(array,eachFn);
 })
 
-.add('lodash.forEach on Uint16Array', function() {
-  lodash.forEach(iarray,eachFn);
+//.add('lodash.forEach on Uint16Array', function() {
+//  lodash.forEach(iarray,eachFn);
+//})
+
+.add('ramda.forEach', function() {
+  ramda.forEach(eachFn, array);
 })
 
 .on('cycle', function(event) {

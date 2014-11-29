@@ -4,13 +4,17 @@ console.log('\n# filter');
 var Benchmark = require('benchmark');
 
 var PowerArray = require('PowerArray'),
+    BoostArray = require('./lib/BoostArray'),
     fast = require('fast.js'),
-    _ = require('underscore')
-    lodash = require('lodash');
+    _ = require('underscore'),
+    lodash = require('lodash'),
+    ramda = require('ramda');
 
 var fastForEach = require('fast.js/array/filter')
 
 var assert = require('assert');
+
+require('./lib/PoweredArray');
 
 var i,
   LEN = 1e7,
@@ -28,6 +32,7 @@ for (i=0; i < LEN; i++) {
 
 var parray = new PowerArray(array);
 var iarray = new Uint16Array(array);
+var barray = BoostArray(array.slice(0));
 
 var filterFn = function (i) {
   return i % 3 === 0 || i % 5 === 0;
@@ -70,8 +75,13 @@ suite
   assert(r.length, testLength);
 })*/
 
-.add('Array.prototype.filter on PowerArray', function() {
+/* .add('Array.prototype.filter on PowerArray', function() {
   var r = Array.prototype.filter.call(parray, filterFn);
+  assert(r.length, testLength);
+}) */
+
+.add('array.$filter', function() {
+  var r = array.$filter(filterFn);
   assert(r.length, testLength);
 })
 
@@ -80,12 +90,17 @@ suite
   assert(r.length, testLength);
 })
 
+.add('boostArray.$filter', function() {
+  var r = barray.$filter(filterFn);
+  assert(r.length, testLength);
+})
+
 /* .add('PowerArray.prototype.filter on Uint16Array', function() {
   var r = PowerArray.prototype.filter.call(iarray, filterFn);
   assert(r.length, testLength);
 }) */
 
-.add('fast.filter on Array', function() {
+.add('fast.filter', function() {
   var r = fast.filter(array,filterFn);
   assert(r.length, testLength);
 })
@@ -95,12 +110,12 @@ suite
   assert(r.length, testLength);
 }) */
 
-.add('fast.filter on PowerArray', function() {
+/* .add('fast.filter on PowerArray', function() {
   var r = fast.filter(parray,filterFn);
   assert(r.length, testLength);
-})
+}) */
 
-.add('underscore.filter on Array', function() {
+.add('underscore.filter', function() {
   var r = _.filter(array,filterFn);
   assert(r.length, testLength);
 })
@@ -110,8 +125,13 @@ suite
   assert(r.length, testLength);
 }) */
 
-.add('lodash.filter on Array', function() {
+.add('lodash.filter', function() {
   var r = lodash.filter(array,filterFn);
+  assert(r.length, testLength);
+})
+
+.add('ramda.filter', function() {
+  var r = ramda.filter(filterFn,array);
   assert(r.length, testLength);
 })
 

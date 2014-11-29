@@ -8,7 +8,8 @@
     "fast.js": "^0.1.1",
     "lodash": "^2.4.1",
     "underscore": "^1.7.0",
-    "powerarray": "^0.1.2"
+    "powerarray": "^0.1.2",
+    "ramda": "^0.8.0"
   },
   "devDependencies": {},
   "scripts": {
