@@ -60,6 +60,8 @@ suite
 
 })
 
+
+
 .add('array.filter', function() {
   var r = array.filter(filterFn);
   assert(r.length, testLength);
