@@ -1,0 +1,23 @@
+{
+  "name": "ArraySpeed",
+  "version": "0.0.0",
+  "description": "",
+  "main": " ",
+  "dependencies": {
+    "benchmark": "^1.0.0",
+    "fast.js": "^0.1.1",
+    "lodash": "^2.4.1",
+    "underscore": "^1.7.0",
+    "powerarray": "^0.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gist.github.com:/65c00b905fecd83e674e.git"
+  },
+  "author": "",
+  "license": "MIT"
+}
