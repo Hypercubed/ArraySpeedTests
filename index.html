@@ -13,10 +13,22 @@
   <!-- bower:js -->
   <script src="bower_components/lodash/dist/lodash.compat.js"></script>
   <script src="bower_components/benchmark/benchmark.js"></script>
-  <script src="bower_components/underscore/underscore.js"></script>
   <script src="bower_components/fast.js/dist/fast.js"></script>
   <script src="bower_components/PowerArray/index.js"></script>
+  <script src="bower_components/ramda/ramda.js"></script>
   <!-- endbower -->
+
+  <script>
+    window.lodash = _.noConflict();
+  </script>
+  <script src="bower_components/underscore/underscore.js"></script>
+
+  <script src="lib/BoostArray.js"></script>
+  <script src="lib/PoweredArray.js"></script>
+  <script src="bench/setup.js"></script>
+  <!--script src="bench/forEach.js"></script -->
+  <script src="bench/filter.js"></script>
+  <!-- script src="bench/reduceSum.js"></script-->
 
 </body>
 </html>

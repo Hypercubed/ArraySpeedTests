@@ -19,14 +19,15 @@
     "benchmark": "~1.0.0",
     "underscore": "~1.7.0",
     "fast.js": "~0.1.1",
-    "PowerArray": "techfort/PowerArray"
+    "PowerArray": "techfort/PowerArray",
+    "ramda": "~0.8.0"
   },
   "overrides": {
     "benchmark": {
       "main": "benchmark.js"
     },
-    "PowerArray": {
-      "main": "index.js"
+    "underscore": {
+      "main": []
     }
   }
 }
