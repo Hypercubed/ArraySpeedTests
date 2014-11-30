@@ -143,9 +143,7 @@
   }) */
 
   .add('lodash.filter', function() {
-    var r = lodash.filter(array,function (i) {
-      return i % 3 === 0 || i % 5 === 0;
-    });
+    var r = lodash.filter(array,filterFn);
     assert(r.length, testLength);
   })
 

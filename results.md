@@ -64,16 +64,16 @@ Fastest is array.$forEach,fast.forEach,for loop,lodash.forEach,boostArray.$forEa
 
 ## filter
 ```
-for loop x 0.60 ops/sec ±9.95% (6 runs sampled)
-while x 0.69 ops/sec ±12.65% (6 runs sampled)
-array.filter x 0.56 ops/sec ±14.71% (6 runs sampled)
-array.$filter x 0.59 ops/sec ±6.98% (6 runs sampled)
-powerArray.filter x 0.25 ops/sec ±7.19% (5 runs sampled)
-boostArray.$filter x 0.57 ops/sec ±11.10% (6 runs sampled)
-fast.filter x 0.58 ops/sec ±12.76% (6 runs sampled)
-underscore.filter x 0.98 ops/sec ±48.43% (7 runs sampled)
-lodash.filter x 2.25 ops/sec ±26.72% (10 runs sampled)
-ramda.filter x 0.56 ops/sec ±12.21% (6 runs sampled)
+for loop x 0.58 ops/sec ±11.66% (6 runs sampled)
+while x 0.71 ops/sec ±9.48% (6 runs sampled)
+array.filter x 0.60 ops/sec ±4.54% (6 runs sampled)
+array.$filter x 0.60 ops/sec ±7.58% (6 runs sampled)
+powerArray.filter x 0.24 ops/sec ±10.11% (5 runs sampled)
+boostArray.$filter x 0.61 ops/sec ±10.12% (6 runs sampled)
+fast.filter x 0.58 ops/sec ±8.90% (6 runs sampled)
+underscore.filter x 1.07 ops/sec ±53.05% (7 runs sampled)
+lodash.filter x 2.38 ops/sec ±20.33% (11 runs sampled)
+ramda.filter x 0.60 ops/sec ±8.40% (6 runs sampled)
 Fastest is lodash.filter
 ```
 
