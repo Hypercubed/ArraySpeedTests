@@ -46,13 +46,24 @@ suite
 
 .add('for loop', function() {
 
-  var i = 0, r = 0,
+  var i = 0, acc = 0,
       len = array.length;
 
   for (; i < len; i++) {
-    r += array[i];
+    acc = reduceFn(acc, array[i],i);
   }
-  assert.equal(r,testSum);
+  assert.equal(acc,testSum);
+})
+
+.add('while', function() {
+
+  var i = -1, acc = 0,
+  len = array.length;
+
+  while (++i < len) {
+    acc = reduceFn(acc, array[i],i);
+  }
+  assert.equal(acc,testSum);
 })
 
 .add('array.reduce', function() {

@@ -60,6 +60,22 @@ suite
 
 })
 
+.add('while', function() {
+
+  var len = array.length,
+      r = [],
+      i = -1;
+
+  while (++i < len) {
+    if (filterFn(array[i], i)) {
+      r[r.length] = this[i];
+    }
+  }
+
+  assert(r.length, testLength);
+
+})
+
 
 
 .add('array.filter', function() {

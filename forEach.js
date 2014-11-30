@@ -35,7 +35,7 @@ var iarray = new Uint16Array(array);
 var barray = BoostArray(array.slice(0));
 
 var eachFn = function (i) {
-  i * 2;
+  i * Math.floor(Math.random() * 100 + 1);
 }
 
 var suite = new Benchmark.Suite;
@@ -48,7 +48,18 @@ suite
       len = array.length;
 
   for (; i < len; i++) {
-    eachFn(array[i]);
+    eachFn(array[i],i);
+  }
+
+})
+
+.add('while', function() {
+
+  var i = -1,
+      len = array.length;
+
+  while (++i < len) {
+    eachFn(array[i],i);
   }
 
 })
