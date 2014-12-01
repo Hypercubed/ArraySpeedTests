@@ -43,11 +43,12 @@
 
   .add('for loop', function() {
 
-    var r = [];
+    var r = [], ri = -1;
 
     for (var i = 0, len = array.length; i < len; i++) {
-      if (filterFn(array[i])) {
-        r.push(array[i]);
+      var value = array[i];
+      if (filterFn(value)) {
+        r[++ri] = value;
       }
     }
 
@@ -58,12 +59,13 @@
   .add('while', function() {
 
     var len = array.length,
-        r = [],
+        r = [], ri = -1,
         i = -1;
 
     while (++i < len) {
+      var value = array[i];
       if (filterFn(array[i])) {
-        r.push(array[i]);
+        r[++ri] = value;
       }
     }
 
