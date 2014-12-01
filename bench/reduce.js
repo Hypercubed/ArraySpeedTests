@@ -6,18 +6,19 @@
   var amd = root.define && define.amd;
   var load = (typeof require == 'function' && !amd) ? require : function () {};
 
-  var setup = load('./setup.js')  || root.setup;
-
   var Benchmark = load('benchmark') || root.Benchmark;
 
-  var PowerArray = load('PowerArray') || root.PowerArray,
-    BoostArray = load('../lib/BoostArray') || root.BoostArray,
-    fast = load('fast.js') || root.fast,
-    underscore = load('underscore') || root._,
-    lodash = load('lodash') || root.lodash,
-    ramda = load('ramda') || root.R;
+  var setup = load('./setup.js')  || root.setup,
+  assert = setup.assert;
 
-  load('../lib/PoweredArray');
+  var PowerArray = load('PowerArray') || root.PowerArray,
+  BoostArray = load('../lib/BoostArray') || root.BoostArray,
+  fast = load('fast.js') || root.fast,
+  underscore = load('underscore') || root._,
+  lodash = load('lodash') || root.lodash,
+  ramda = load('ramda') || root.R;
+
+  BoostArray(Array.prototype);  // Boost the Array prototype
 
   var assert = load('assert') || function fail(actual, expected, message) {
     if (actual !== expected) {
@@ -30,15 +31,13 @@
   //var iarray = new Uint16Array(array);
   var barray = BoostArray(array.slice(0));
 
-  console.log('\n# reduce Sum');
-
   var reduceFn = function (p, i) {
     return p+i;
   };
 
   var testSum = array.reduce(reduceFn,0);
 
-  var suite = new Benchmark.Suite();
+  var suite = new Benchmark.Suite('reduce (sum)');
 
   suite
 
@@ -143,24 +142,13 @@
   .add('ramda.reduce', function() {
     var r = ramda.reduce(reduceFn,0,array);
     assert(r,testSum);
-  })
+  });
 
   /* .add('lodash.reduce on Uint16Array', function() {
   var r = lodash.reduce(iarray,reduceFn,0);
   assert(r,testSum);
   }) */
 
-  .on('cycle', function(event) {
-    if (event.target.aborted) {
-      console.log(String(event.target)+' aborted');
-      return;
-    }
-    console.log(String(event.target));
-  })
-  .on('complete', function() {
-    console.log('Fastest is ' + this.filter('fastest').pluck('name'));
-  })
-
-  .run();
+  setup(suite).run();
 
 }).call(this);

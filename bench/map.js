@@ -26,13 +26,13 @@
   //var iarray = new Uint16Array(array);
   var barray = BoostArray(array.slice(0));
 
-  var filterFn = function (i) {
-    return i % 3 === 0 || i % 5 === 0;
+  var mapFn = function (i) {
+    return i * 2;
   };
 
-  var testLength = array.filter(filterFn).length;
+  var testLength = array.map(mapFn).length;
 
-  var suite = new Benchmark.Suite('filter');
+  var suite = new Benchmark.Suite('map');
 
   suite
 
@@ -41,12 +41,12 @@
     var r = [];
 
     for (var i = 0, len = array.length; i < len; i++) {
-      if (filterFn(array[i], i)) {
-        r.push(array[i]);
-      }
+      r.push(mapFn(array[i], i));
     }
 
     assert(r.length, testLength);
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
 
   })
 
@@ -57,92 +57,107 @@
         i = -1;
 
     while (++i < len) {
-      if (filterFn(array[i], i)) {
-        r[r.length] = this[i];
-      }
+      r.push(mapFn(array[i], i));
     }
 
     assert(r.length, testLength);
-
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
   })
 
-  .add('array.filter', function() {
-    var r = array.filter(filterFn);
+  .add('array.map', function() {
+    var r = array.map(mapFn);
     assert(r.length, testLength);
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
   })
 
   /* .add('Array.prototype.filter on array', function() {
-    var r = Array.prototype.filter.call(array,filterFn);
+    var r = Array.prototype.filter.call(array,mapFn);
     assert(r.length, testLength);
   })
 
   .add('Array.prototype.filter on Uint16Array', function() {
-  var r = Array.prototype.filter.call(iarray,filterFn);
+  var r = Array.prototype.filter.call(iarray,mapFn);
   assert(r.length, testLength);
   })*/
 
   /* .add('Array.prototype.filter on PowerArray', function() {
-  var r = Array.prototype.filter.call(parray, filterFn);
+  var r = Array.prototype.filter.call(parray, mapFn);
   assert(r.length, testLength);
   }) */
 
-  .add('array.$filter', function() {
-    var r = array.$filter(filterFn);
+  .add('array.$map', function() {
+    var r = array.$map(mapFn);
     assert(r.length, testLength);
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
   })
 
-  .add('powerArray.filter', function() {
-    var r = parray.filter(filterFn);
+  .add('powerArray.map', function() {
+    var r = parray.map(mapFn);
     assert(r.length, testLength);
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
   })
 
-  .add('boostArray.$filter', function() {
-    var r = barray.$filter(filterFn);
+  .add('boostArray.$map', function() {
+    var r = barray.$map(mapFn);
     assert(r.length, testLength);
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
   })
 
   /* .add('PowerArray.prototype.filter on Uint16Array', function() {
-  var r = PowerArray.prototype.filter.call(iarray, filterFn);
+  var r = PowerArray.prototype.filter.call(iarray, mapFn);
   assert(r.length, testLength);
   }) */
 
-  .add('fast.filter', function() {
-    var r = fast.filter(array,filterFn);
+  .add('fast.map', function() {
+    var r = fast.map(array,mapFn);
     assert(r.length, testLength);
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
   })
 
   /* .add('fast.filter on Uint16Array', function() {  // fast.filter treats non-instanceof Arrays as objects
-  var r = fastForEach(iarray,filterFn);
+  var r = fastForEach(iarray,mapFn);
   assert(r.length, testLength);
   }) */
 
   /* .add('fast.filter on PowerArray', function() {
-  var r = fast.filter(parray,filterFn);
+  var r = fast.filter(parray,mapFn);
   assert(r.length, testLength);
   }) */
 
-  .add('underscore.filter', function() {
-    var r = underscore.filter(array,filterFn);
+  .add('underscore.map', function() {
+    var r = underscore.map(array,mapFn);
     assert(r.length, testLength);
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
   })
 
   /* .add('underscore.filter on Uint16Array', function() {
-  var r = _.filter(iarray,filterFn);
+  var r = _.filter(iarray,mapFn);
   assert(r.length, testLength);
   }) */
 
-  .add('lodash.filter', function() {
-    var r = lodash.filter(array,filterFn);
+  .add('lodash.map', function() {
+    var r = lodash.map(array,mapFn);
     assert(r.length, testLength);
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
   })
 
-  .add('ramda.filter', function() {
-    var r = ramda.filter(filterFn,array);
+  .add('ramda.map', function() {
+    var r = ramda.map(mapFn,array);
     assert(r.length, testLength);
+    assert(r[0], 2*array[0]);
+    assert(r[100], 2*array[100]);
   });
 
   /* .add('lodash.filter on Uint16Array', function() {
-  var r = lodash.filter(iarray,filterFn);
+  var r = lodash.filter(iarray,mapFn);
   assert(r.length, testLength);
   }) */
 

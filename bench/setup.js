@@ -10,7 +10,25 @@
 
   var R = load('ramda') || root.R;
 
-  var setup = {};
+  var setup = function(suite) {
+
+    return suite
+      .on('start', function() {
+        console.log('\n#',this.name);
+      })
+      .on('cycle', function(event) {
+        if (!event.target.aborted) {
+          console.log(String(event.target));
+        }
+      })
+      .on('error', function(event) {
+        console.log(String(event.target.name)+' '+String(event.target.error));
+      })
+      .on('complete', function() {
+        console.log('Fastest is ' + this.filter('fastest').pluck('name'));
+      });
+
+  }
 
   setup.randomIntArray = R.memoize(function randomIntArray(LEN) {
     var i,
@@ -28,6 +46,15 @@
 
     return array;
   });
+
+  setup.assert = function assert(actual, expected, ctx) {
+    //console.log(ctx.abort, ctx.error);
+    if (actual !== expected) {
+      var message = 'Expected '+actual+' to equal '+expected;
+      ctx.error = new Error(message);
+      ctx.abort();
+    }
+  };
 
   if( typeof exports !== 'undefined' ) {
     if( typeof module !== 'undefined' && module.exports ) {

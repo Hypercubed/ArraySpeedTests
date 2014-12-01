@@ -6,9 +6,10 @@
   var amd = root.define && define.amd;
   var load = (typeof require == 'function' && !amd) ? require : function () {};
 
-  var setup = load('./setup.js')  || root.setup;
-
   var Benchmark = load('benchmark') || root.Benchmark;
+
+  var setup = load('./setup.js')  || root.setup,
+      assert = setup.assert;
 
   var PowerArray = load('PowerArray') || root.PowerArray,
     BoostArray = load('../lib/BoostArray') || root.BoostArray,
@@ -17,38 +18,30 @@
     lodash = load('lodash') || root.lodash,
     ramda = load('ramda') || root.R;
 
-  load('../lib/PoweredArray');
+  BoostArray(Array.prototype);  // Boost the Array prototype
 
-  var assert = load('assert') || function fail(actual, expected, message) {
-    if (actual !== expected) {
-      throw message || 'error';
-    }
-  };
-
-  var array = setup.randomIntArray(1e7);
+  var LEN = 1e7;
+  var array = setup.randomIntArray(LEN);
   var parray = new PowerArray(array);
   //var iarray = new Uint16Array(array);
   var barray = BoostArray(array.slice(0));
 
+  var counter = 0;
   var eachFn = function (i) {
     i * Math.floor(Math.random() * 100 + 1);
+    counter++;
   };
 
-  console.log('\n# forEach');
-
-  var suite = new Benchmark.Suite();
+  var suite = new Benchmark.Suite('forEach');
 
   suite
 
   .add('for loop', function() {
-
-    var i = 0,
-        len = array.length;
-
-    for (; i < len; i++) {
-      eachFn(array[i],i);
-    }
-
+      counter = 0;
+      for (var i = 0, len = array.length; i < len; i++) {
+        eachFn(array[i],i);
+      }
+      assert(counter,LEN,this);
   })
 
   .add('while', function() {
@@ -56,14 +49,18 @@
     var i = -1,
         len = array.length;
 
+    counter = 0;
     while (++i < len) {
       eachFn(array[i],i);
     }
+    assert(counter,LEN,this);
 
   })
 
   .add('array.forEach', function() {
+    counter = 0;
     array.forEach(eachFn);
+    assert(counter,LEN,this);
   })
 
   /* .add('Array.prototype.forEach on array', function() {
@@ -79,15 +76,21 @@
   }) */
 
   .add('array.$forEach', function() {
+    counter = 0;
     array.$forEach(eachFn);
+    assert(counter,LEN,this);
   })
 
   .add('powerArray.forEach', function() {
+    counter = 0;
     parray.forEach(eachFn);
+    assert(counter,LEN,this);
   })
 
   .add('boostArray.$forEach', function() {
+    counter = 0;
     barray.$forEach(eachFn);
+    assert(counter,LEN,this);
   })
 
   //.add('PowerArray.prototype.forEach on Uint16Array', function() {
@@ -95,7 +98,9 @@
   //})
 
   .add('fast.forEach', function() {
+    counter = 0;
     fast.forEach(array,eachFn);
+    assert(counter,LEN,this);
   })
 
   //.add('fast.forEach on Uint16Array', function() {  // fast.forEach treats non-instanceof Arrays as objects
@@ -107,7 +112,9 @@
   //})
 
   .add('underscore.forEach', function() {
+    counter = 0;
     underscore.forEach(array,eachFn);
+    assert(counter,LEN,this);
   })
 
   //.add('underscore.forEach on Uint16Array', function() {
@@ -115,7 +122,9 @@
   //})
 
   .add('lodash.forEach', function() {
+    counter = 0;
     lodash.forEach(array,eachFn);
+    assert(counter,LEN,this);
   })
 
   //.add('lodash.forEach on Uint16Array', function() {
@@ -123,20 +132,11 @@
   //})
 
   .add('ramda.forEach', function() {
+    counter = 0;
     ramda.forEach(eachFn, array);
-  })
+    assert(counter,LEN,this);
+  });
 
-  .on('cycle', function(event) {
-    if (event.target.aborted) {
-      console.log(String(event.target)+' aborted');
-      return;
-    }
-    console.log(String(event.target));
-  })
-  .on('complete', function() {
-    console.log('Fastest is ' + this.filter('fastest').pluck('name'));
-  })
-
-  .run();
+  setup(suite).run();
 
 }).call(this);
