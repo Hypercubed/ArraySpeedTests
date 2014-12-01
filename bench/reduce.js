@@ -9,14 +9,14 @@
   var Benchmark = load('benchmark') || root.Benchmark;
 
   var setup = load('./setup.js')  || root.setup,
-  assert = setup.assert;
+      assert = setup.assert;
 
   var PowerArray = load('PowerArray') || root.PowerArray,
-  BoostArray = load('../lib/BoostArray') || root.BoostArray,
-  fast = load('fast.js') || root.fast,
-  underscore = load('underscore') || root._,
-  lodash = load('lodash') || root.lodash,
-  ramda = load('ramda') || root.R;
+      BoostArray = load('../lib/BoostArray') || root.BoostArray,
+      fast = load('fast.js') || root.fast,
+      underscore = load('underscore') || root._,
+      lodash = load('lodash') || root.lodash,
+      ramda = load('ramda') || root.R;
 
   BoostArray(Array.prototype);  // Boost the Array prototype
 
@@ -26,128 +26,88 @@
     }
   };
 
-  var array = setup.randomIntArray(1e7);
+  var LEN = 1e7;
+  var array = setup.randomIntArray(LEN);
   var parray = new PowerArray(array);
   //var iarray = new Uint16Array(array);
   var barray = BoostArray(array.slice(0));
 
-  var reduceFn = function (p, i) {
+  function reduceFn(p, i) {
     return p+i;
   };
+  function check(r) {
+    assert(r,testSum,this);
+  }
 
   var testSum = array.reduce(reduceFn,0);
 
   var suite = new Benchmark.Suite('reduce (sum)');
 
   suite
+    .add('for loop', function() {
 
-  .add('for loop', function() {
+      var i = 0, r = 0,
+          len = array.length;
 
-    var i = 0, acc = 0,
-    len = array.length;
+      for (; i < len; i++) {
+        r = reduceFn(r, array[i]);
+      }
+      check.call(this,r);
+    })
 
-    for (; i < len; i++) {
-      acc = reduceFn(acc, array[i],i);
-    }
-    assert(acc,testSum);
-  })
+    .add('while', function() {
 
-  .add('while', function() {
+      var i = -1, r = 0,
+          len = array.length;
 
-    var i = -1, acc = 0,
-    len = array.length;
+      while (++i < len) {
+        r = reduceFn(r, array[i]);
+      }
+      check.call(this,r);
+    })
 
-    while (++i < len) {
-      acc = reduceFn(acc, array[i],i);
-    }
-    assert(acc,testSum);
-  })
+    .add('array.reduce', function() {
+      var r = array.reduce(reduceFn,0);
+      check.call(this,r);
+    })
 
-  .add('array.reduce', function() {
-    var r = array.reduce(reduceFn,0);
-    assert(r,testSum);
-  })
+    .add('array.$reduce', function() {
+      var r = array.$reduce(reduceFn,0);
+      check.call(this,r);
+    })
 
-  /* .add('Array.prototype.reduce on array', function() {
-    var r = Array.prototype.reduce.call(array,reduceFn);
-    assert(r,testSum);
-  })
+    .add('powerArray.forEach', function() {
+      var r = 0;
+      parray.forEach(function (i) {
+        r += i;
+      });
+      check.call(this,r);
+    })
 
-  .add('Array.prototype.reduce on Uint16Array', function() {
-  var r = Array.prototype.reduce.call(iarray,reduceFn,0);
-  assert(r,testSum);
-  })
+    .add('boostArray.$reduce', function() {
+      var r = barray.$reduce(reduceFn,0);
+      check.call(this,r);
+    })
 
-  .add('Array.prototype.reduce on PowerArray', function() {
-  var r = Array.prototype.reduce.call(parray, reduceFn,0);
-  assert(r,testSum);
-  }) */
+    .add('fast.reduce', function() {
+      var r = fast.reduce(array,reduceFn, 0);
+      check.call(this,r);
+    })
 
-  .add('array.$reduce', function() {
-    var r = array.$reduce(reduceFn,0);
-    assert(r,testSum);
-  })
+    .add('underscore.reduce', function() {
+      var r = underscore.reduce(array,reduceFn,0);
+      check.call(this,r);
+    })
 
-  .add('powerArray.forEach', function() {
-    var r = 0;
-    parray.forEach(function (i) {
-      r += i;
+    .add('lodash.reduce', function() {
+      var r = lodash.reduce(array,reduceFn,0);
+      check.call(this,r);
+    })
+
+    .add('ramda.reduce', function() {
+      var r = ramda.reduce(reduceFn,0,array);
+      check.call(this,r);
     });
-    assert(r,testSum);
-  })
-
-  .add('boostArray.$reduce', function() {
-    var r = barray.$reduce(reduceFn,0);
-    assert(r,testSum);
-  })
-
-  /* .add('PowerArray.prototype.forEach on Uint16Array', function() {
-  var r = 0;
-  PowerArray.prototype.forEach.call(iarray, function (i) {
-  r += i;
-  });
-  assert(r,testSum);
-  }) */
-
-  .add('fast.reduce', function() {
-    var r = fast.reduce(array,reduceFn, 0);
-    assert(r,testSum);
-  })
-
-  /* .add('fast.reduce on Uint16Array', function() {  // fast.reduce treats non-instanceof Arrays as objects
-  var r = fastReduce(iarray,reduceFn, 0);
-  assert(r,testSum);
-  })
-
-  .add('fast.reduce on PowerArray', function() {
-  var r = fast.reduce(parray,reduceFn,0);
-  assert(r,testSum);
-  }) */
-
-  .add('underscore.reduce', function() {
-    var r = underscore.reduce(array,reduceFn,0);
-    assert(r,testSum);
-  })
-
-  /* .add('underscore.reduce on Uint16Array', function() {
-  var r = _.reduce(iarray,reduceFn,0);
-  assert(r,testSum);
-  }) */
-
-  .add('lodash.reduce', function() {
-    var r = lodash.reduce(array,reduceFn,0);
-    assert(r,testSum);
-  })
-
-  .add('ramda.reduce', function() {
-    var r = ramda.reduce(reduceFn,0,array);
-    assert(r,testSum);
-  });
-
-  /* .add('lodash.reduce on Uint16Array', function() {
-  var r = lodash.reduce(iarray,reduceFn,0);
-  assert(r,testSum);
-  }) */
 
   setup(suite).run();
 

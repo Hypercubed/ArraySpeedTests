@@ -1,123 +1,124 @@
-# Node
+# Node (v0.10.26)
 
 ## filter
 ```
-for loop x 2.57 ops/sec ±4.06% (11 runs sampled)
-while x 1.76 ops/sec ±14.23% (9 runs sampled)
-array.filter x 1.37 ops/sec ±2.64% (8 runs sampled)
-array.$filter x 2.32 ops/sec ±6.45% (10 runs sampled)
-powerArray.filter x 0.41 ops/sec ±1.29% (6 runs sampled)
-boostArray.$filter x 2.08 ops/sec ±12.69% (9 runs sampled)
-fast.filter x 2.09 ops/sec ±14.39% (10 runs sampled)
-underscore.filter x 1.77 ops/sec ±17.07% (9 runs sampled)
-lodash.filter x 2.14 ops/sec ±9.62% (10 runs sampled)
-ramda.filter x 2.60 ops/sec ±7.60% (11 runs sampled)
-Fastest is for loop,ramda.filter
+for loop x 2.79 ops/sec ±8.74% (11 runs sampled)
+while x 2.89 ops/sec ±9.31% (11 runs sampled)
+array.filter x 1.45 ops/sec ±5.80% (8 runs sampled)
+array.$filter x 2.54 ops/sec ±6.84% (10 runs sampled)
+powerArray.filter x 0.42 ops/sec ±1.51% (6 runs sampled)
+boostArray.$filter x 2.56 ops/sec ±8.17% (11 runs sampled)
+fast.filter x 2.33 ops/sec ±6.99% (10 runs sampled)
+underscore.filter x 2.07 ops/sec ±7.54% (10 runs sampled)
+lodash.filter x 2.36 ops/sec ±6.71% (10 runs sampled)
+ramda.filter x 2.51 ops/sec ±9.49% (10 runs sampled)
+Fastest is while,for loop,boostArray.$filter,ramda.filter
 ```
 
 ## forEach
 ```
-for loop x 37.39 ops/sec ±2.31% (62 runs sampled)
-while x 36.91 ops/sec ±3.05% (65 runs sampled)
-array.forEach x 2.95 ops/sec ±2.51% (12 runs sampled)
-array.$forEach x 9.46 ops/sec ±1.96% (28 runs sampled)
-powerArray.forEach x 9.16 ops/sec ±4.35% (27 runs sampled)
-boostArray.$forEach x 8.80 ops/sec ±4.08% (27 runs sampled)
-fast.forEach x 8.77 ops/sec ±4.53% (26 runs sampled)
-underscore.forEach x 8.37 ops/sec ±2.59% (25 runs sampled)
-lodash.forEach x 8.59 ops/sec ±4.95% (26 runs sampled)
-ramda.forEach x 14.96 ops/sec ±3.32% (42 runs sampled)
+for loop x 35.10 ops/sec ±3.31% (62 runs sampled)
+while x 34.52 ops/sec ±3.74% (62 runs sampled)
+array.forEach x 2.69 ops/sec ±4.01% (11 runs sampled)
+array.$forEach x 14.84 ops/sec ±3.35% (42 runs sampled)
+powerArray.forEach x 9.59 ops/sec ±1.22% (28 runs sampled)
+boostArray.$forEach x 16.07 ops/sec ±2.40% (44 runs sampled)
+fast.forEach x 9.54 ops/sec ±0.86% (28 runs sampled)
+underscore.forEach x 9.38 ops/sec ±4.18% (28 runs sampled)
+lodash.forEach x 9.60 ops/sec ±1.22% (28 runs sampled)
+ramda.forEach x 15.58 ops/sec ±0.85% (43 runs sampled)
 Fastest is for loop,while
 ```
 
 ## reduce (sum)
 ```
-for loop x 74.09 ops/sec ±1.83% (78 runs sampled)
-while x 60.32 ops/sec ±1.54% (64 runs sampled)
-array.reduce x 2.72 ops/sec ±10.52% (11 runs sampled)
-array.$reduce x 5.62 ops/sec ±17.79% (18 runs sampled)
-powerArray.forEach x 7.34 ops/sec ±2.89% (23 runs sampled)
-boostArray.$reduce x 8.40 ops/sec ±12.54% (25 runs sampled)
-fast.reduce x 7.28 ops/sec ±8.69% (22 runs sampled)
-underscore.reduce x 4.22 ops/sec ±9.23% (16 runs sampled)
-lodash.reduce x 3.53 ops/sec ±19.25% (13 runs sampled)
-ramda.reduce x 14.53 ops/sec ±8.10% (42 runs sampled)
+for loop x 73.39 ops/sec ±1.53% (77 runs sampled)
+while x 55.26 ops/sec ±0.80% (73 runs sampled)
+array.reduce x 3.08 ops/sec ±2.90% (12 runs sampled)
+array.$reduce x 19.24 ops/sec ±1.98% (36 runs sampled)
+powerArray.forEach x 7.77 ops/sec ±0.69% (24 runs sampled)
+boostArray.$reduce x 20.13 ops/sec ±3.09% (38 runs sampled)
+fast.reduce x 10.24 ops/sec ±1.06% (30 runs sampled)
+underscore.reduce x 6.23 ops/sec ±1.32% (20 runs sampled)
+lodash.reduce x 6.97 ops/sec ±4.17% (22 runs sampled)
+ramda.reduce x 20.40 ops/sec ±1.37% (38 runs sampled)
 Fastest is for loop
 ```
 
 ## map
 ```
-for loop x 2.04 ops/sec ±6.56% (9 runs sampled)
-while x 1.98 ops/sec ±4.36% (9 runs sampled)
-array.map x 1.38 ops/sec ±2.74% (8 runs sampled)
-array.$map x 1.83 ops/sec ±2.81% (9 runs sampled)
-powerArray.map x 0.21 ops/sec ±2.26% (5 runs sampled)
-boostArray.$map x 1.84 ops/sec ±2.99% (9 runs sampled)
-fast.map x 2.25 ops/sec ±1.01% (9 runs sampled)
-underscore.map x 1.94 ops/sec ±12.98% (9 runs sampled)
-lodash.map x 2.05 ops/sec ±7.68% (9 runs sampled)
-ramda.map x 2.37 ops/sec ±3.33% (10 runs sampled)
-Fastest is ramda.map
+for loop x 2.38 ops/sec ±6.01% (10 runs sampled)
+while x 2.37 ops/sec ±4.85% (10 runs sampled)
+array.map x 1.44 ops/sec ±3.04% (8 runs sampled)
+array.$map x 2.20 ops/sec ±6.56% (10 runs sampled)
+powerArray.map x 0.22 ops/sec ±0.49% (5 runs sampled)
+boostArray.$map x 2.18 ops/sec ±5.62% (10 runs sampled)
+fast.map x 2.01 ops/sec ±6.97% (9 runs sampled)
+underscore.map x 1.99 ops/sec ±5.40% (9 runs sampled)
+lodash.map x 1.94 ops/sec ±5.61% (9 runs sampled)
+ramda.map x 2.22 ops/sec ±4.48% (10 runs sampled)
+Fastest is while,for loop,ramda.map
 ```
 
-# Browser
+# Browser (Chrome Version 39.0.2171.71 m)
 
 ## forEach
 ```
-for loop x 2.12 ops/sec ±0.62% (10 runs sampled)
-while x 2.07 ops/sec ±2.91% (10 runs sampled)
-array.forEach x 1.07 ops/sec ±2.45% (7 runs sampled)
-array.$forEach x 2.15 ops/sec ±1.38% (10 runs sampled)
-powerArray.forEach x 2.10 ops/sec ±1.47% (10 runs sampled)
-boostArray.$forEach x 2.08 ops/sec ±4.34% (10 runs sampled)
-fast.forEach x 2.16 ops/sec ±2.08% (10 runs sampled)
-underscore.forEach x 2.18 ops/sec ±2.42% (10 runs sampled)
-lodash.forEach x 2.07 ops/sec ±3.77% (10 runs sampled)
-ramda.forEach x 2.12 ops/sec ±2.08% (10 runs sampled)
-Fastest is underscore.forEach,array.$forEach,fast.forEach
+for loop x 11.32 ops/sec ±0.78% (33 runs sampled)
+while x 10.86 ops/sec ±1.82% (32 runs sampled)
+array.forEach x 1.67 ops/sec ±2.02% (9 runs sampled)
+array.$forEach x 11.61 ops/sec ±1.52% (33 runs sampled)
+powerArray.forEach x 11.25 ops/sec ±0.57% (33 runs sampled)
+boostArray.$forEach x 11.25 ops/sec ±1.02% (32 runs sampled)
+fast.forEach x 11.75 ops/sec ±0.84% (34 runs sampled)
+underscore.forEach x 11.15 ops/sec ±2.18% (32 runs sampled)
+lodash.forEach x 10.94 ops/sec ±0.93% (32 runs sampled)
+ramda.forEach x 11.22 ops/sec ±1.98% (32 runs sampled)
+Fastest is fast.forEach,array.$forEach
 ```
 
 # filter
 ```
-for loop x 1.36 ops/sec ±6.54% (8 runs sampled)
-while x 1.32 ops/sec ±11.49% (8 runs sampled)
-array.filter x 1.18 ops/sec ±10.44% (8 runs sampled)
-array.$filter x 1.41 ops/sec ±5.64% (8 runs sampled)
-powerArray.filter x 0.49 ops/sec ±8.69% (6 runs sampled)
-boostArray.$filter x 1.32 ops/sec ±8.25% (8 runs sampled)
-fast.filter x 1.30 ops/sec ±11.74% (8 runs sampled)
-underscore.filter x 2.09 ops/sec ±33.29% (9 runs sampled)
-lodash.filter x 4.22 ops/sec ±21.00% (16 runs sampled)
-ramda.filter x 1.39 ops/sec ±10.32% (8 runs sampled)
+for loop x 1.28 ops/sec ±6.98% (8 runs sampled)
+while x 1.24 ops/sec ±11.12% (8 runs sampled)
+array.filter x 1.26 ops/sec ±4.57% (8 runs sampled)
+array.$filter x 1.30 ops/sec ±6.58% (8 runs sampled)
+powerArray.filter x 0.52 ops/sec ±5.50% (6 runs sampled)
+boostArray.$filter x 1.23 ops/sec ±13.77% (8 runs sampled)
+fast.filter x 1.25 ops/sec ±6.92% (7 runs sampled)
+underscore.filter x 2.05 ops/sec ±45.23% (9 runs sampled)
+lodash.filter x 4.64 ops/sec ±14.29% (16 runs sampled)
+ramda.filter x 1.23 ops/sec ±20.96% (7 runs sampled)
 Fastest is lodash.filter
+
 ```
 
 # reduce (sum)
 ```
-for loop x 40.57 ops/sec ±0.53% (55 runs sampled)
-while x 40.74 ops/sec ±0.76% (55 runs sampled)
-array.reduce x 1.95 ops/sec ±4.62% (9 runs sampled)
-array.$reduce x 40.80 ops/sec ±0.98% (55 runs sampled)
-powerArray.forEach x 7.97 ops/sec ±2.98% (24 runs sampled)
-boostArray.$reduce x 41.06 ops/sec ±1.00% (55 runs sampled)
-fast.reduce x 40.90 ops/sec ±0.60% (55 runs sampled)
-underscore.reduce x 6.28 ops/sec ±0.88% (20 runs sampled)
-lodash.reduce x 41.49 ops/sec ±0.50% (56 runs sampled)
-ramda.reduce x 40.38 ops/sec ±0.77% (54 runs sampled)
-Fastest is lodash.reduce,boostArray.$reduce
+for loop x 42.38 ops/sec ±0.69% (57 runs sampled)
+while x 40.60 ops/sec ±0.55% (55 runs sampled)
+array.reduce x 1.96 ops/sec ±2.52% (9 runs sampled)
+array.$reduce x 40.70 ops/sec ±0.76% (55 runs sampled)
+powerArray.forEach x 8.11 ops/sec ±2.05% (25 runs sampled)
+boostArray.$reduce x 40.44 ops/sec ±0.61% (55 runs sampled)
+fast.reduce x 40.82 ops/sec ±0.51% (55 runs sampled)
+underscore.reduce x 6.14 ops/sec ±3.84% (20 runs sampled)
+lodash.reduce x 41.38 ops/sec ±0.74% (56 runs sampled)
+ramda.reduce x 40.98 ops/sec ±0.42% (55 runs sampled)
+Fastest is for loop
 ```
 
 # map
 ```
-for loop x 0.54 ops/sec ±2.94% (6 runs sampled)
-while x 0.55 ops/sec ±1.19% (6 runs sampled)
-array.map x 1.74 ops/sec ±10.61% (8 runs sampled)
-array.$map x 0.56 ops/sec ±0.60% (6 runs sampled)
-powerArray.map x 0.23 ops/sec ±6.50% (5 runs sampled)
-boostArray.$map x 0.54 ops/sec ±2.87% (6 runs sampled)
-fast.map x 7.81 ops/sec ±36.81% (12 runs sampled)
-underscore.map x 4.84 ops/sec ±34.38% (13 runs sampled)
-lodash.map x 5.34 ops/sec ±33.12% (14 runs sampled)
-ramda.map x 5.25 ops/sec ±33.68% (14 runs sampled)
-Fastest is fast.map,lodash.map,ramda.map,underscore.map
+for loop x 8.70 ops/sec ±8.76% (15 runs sampled)
+while x 12.23 ops/sec ±22.45% (16 runs sampled)
+array.map x 1.61 ops/sec ±5.03% (8 runs sampled)
+array.$map x 12.70 ops/sec ±24.40% (16 runs sampled)
+powerArray.map x 0.22 ops/sec ±0.62% (5 runs sampled)
+boostArray.$map x 6.89 ops/sec ±25.44% (17 runs sampled)
+fast.map x 8.96 ops/sec ±7.56% (15 runs sampled)
+underscore.map x 11.45 ops/sec ±21.74% (16 runs sampled)
+lodash.map x 12.19 ops/sec ±22.68% (16 runs sampled)
+ramda.map x 12.08 ops/sec ±22.71% (16 runs sampled)
+Fastest is array.$map,while,lodash.map,ramda.map
 ```
