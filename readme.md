@@ -64,60 +64,60 @@ Fastest is ramda.map
 
 ## forEach
 ```
-for loop x 2.12 ops/sec ±0.62% (10 runs sampled) setup.js:21
-while x 2.07 ops/sec ±2.91% (10 runs sampled) setup.js:21
-array.forEach x 1.07 ops/sec ±2.45% (7 runs sampled) setup.js:21
-array.$forEach x 2.15 ops/sec ±1.38% (10 runs sampled) setup.js:21
-powerArray.forEach x 2.10 ops/sec ±1.47% (10 runs sampled) setup.js:21
-boostArray.$forEach x 2.08 ops/sec ±4.34% (10 runs sampled) setup.js:21
-fast.forEach x 2.16 ops/sec ±2.08% (10 runs sampled) setup.js:21
-underscore.forEach x 2.18 ops/sec ±2.42% (10 runs sampled) setup.js:21
-lodash.forEach x 2.07 ops/sec ±3.77% (10 runs sampled) setup.js:21
-ramda.forEach x 2.12 ops/sec ±2.08% (10 runs sampled) setup.js:21
-Fastest is underscore.forEach,array.$forEach,fast.forEach setup.js:28
+for loop x 2.12 ops/sec ±0.62% (10 runs sampled)
+while x 2.07 ops/sec ±2.91% (10 runs sampled)
+array.forEach x 1.07 ops/sec ±2.45% (7 runs sampled)
+array.$forEach x 2.15 ops/sec ±1.38% (10 runs sampled)
+powerArray.forEach x 2.10 ops/sec ±1.47% (10 runs sampled)
+boostArray.$forEach x 2.08 ops/sec ±4.34% (10 runs sampled)
+fast.forEach x 2.16 ops/sec ±2.08% (10 runs sampled)
+underscore.forEach x 2.18 ops/sec ±2.42% (10 runs sampled)
+lodash.forEach x 2.07 ops/sec ±3.77% (10 runs sampled)
+ramda.forEach x 2.12 ops/sec ±2.08% (10 runs sampled)
+Fastest is underscore.forEach,array.$forEach,fast.forEach
 ```
 
 # filter
 ```
-for loop x 1.36 ops/sec ±6.54% (8 runs sampled) setup.js:21
-while x 1.32 ops/sec ±11.49% (8 runs sampled) setup.js:21
-array.filter x 1.18 ops/sec ±10.44% (8 runs sampled) setup.js:21
-array.$filter x 1.41 ops/sec ±5.64% (8 runs sampled) setup.js:21
-powerArray.filter x 0.49 ops/sec ±8.69% (6 runs sampled) setup.js:21
-boostArray.$filter x 1.32 ops/sec ±8.25% (8 runs sampled) setup.js:21
-fast.filter x 1.30 ops/sec ±11.74% (8 runs sampled) setup.js:21
-underscore.filter x 2.09 ops/sec ±33.29% (9 runs sampled) setup.js:21
-lodash.filter x 4.22 ops/sec ±21.00% (16 runs sampled) setup.js:21
-ramda.filter x 1.39 ops/sec ±10.32% (8 runs sampled) setup.js:21
-Fastest is lodash.filter setup.js:28
+for loop x 1.36 ops/sec ±6.54% (8 runs sampled)
+while x 1.32 ops/sec ±11.49% (8 runs sampled)
+array.filter x 1.18 ops/sec ±10.44% (8 runs sampled)
+array.$filter x 1.41 ops/sec ±5.64% (8 runs sampled)
+powerArray.filter x 0.49 ops/sec ±8.69% (6 runs sampled)
+boostArray.$filter x 1.32 ops/sec ±8.25% (8 runs sampled)
+fast.filter x 1.30 ops/sec ±11.74% (8 runs sampled)
+underscore.filter x 2.09 ops/sec ±33.29% (9 runs sampled)
+lodash.filter x 4.22 ops/sec ±21.00% (16 runs sampled)
+ramda.filter x 1.39 ops/sec ±10.32% (8 runs sampled)
+Fastest is lodash.filter
 ```
 
 # reduce (sum)
 ```
-for loop x 40.57 ops/sec ±0.53% (55 runs sampled) setup.js:21
-while x 40.74 ops/sec ±0.76% (55 runs sampled) setup.js:21
-array.reduce x 1.95 ops/sec ±4.62% (9 runs sampled) setup.js:21
-array.$reduce x 40.80 ops/sec ±0.98% (55 runs sampled) setup.js:21
-powerArray.forEach x 7.97 ops/sec ±2.98% (24 runs sampled) setup.js:21
-boostArray.$reduce x 41.06 ops/sec ±1.00% (55 runs sampled) setup.js:21
-fast.reduce x 40.90 ops/sec ±0.60% (55 runs sampled) setup.js:21
-underscore.reduce x 6.28 ops/sec ±0.88% (20 runs sampled) setup.js:21
-lodash.reduce x 41.49 ops/sec ±0.50% (56 runs sampled) setup.js:21
-ramda.reduce x 40.38 ops/sec ±0.77% (54 runs sampled) setup.js:21
-Fastest is lodash.reduce,boostArray.$reduce setup.js:28
+for loop x 40.57 ops/sec ±0.53% (55 runs sampled)
+while x 40.74 ops/sec ±0.76% (55 runs sampled)
+array.reduce x 1.95 ops/sec ±4.62% (9 runs sampled)
+array.$reduce x 40.80 ops/sec ±0.98% (55 runs sampled)
+powerArray.forEach x 7.97 ops/sec ±2.98% (24 runs sampled)
+boostArray.$reduce x 41.06 ops/sec ±1.00% (55 runs sampled)
+fast.reduce x 40.90 ops/sec ±0.60% (55 runs sampled)
+underscore.reduce x 6.28 ops/sec ±0.88% (20 runs sampled)
+lodash.reduce x 41.49 ops/sec ±0.50% (56 runs sampled)
+ramda.reduce x 40.38 ops/sec ±0.77% (54 runs sampled)
+Fastest is lodash.reduce,boostArray.$reduce
 ```
 
 # map
 ```
-for loop x 0.54 ops/sec ±2.94% (6 runs sampled) setup.js:21
-while x 0.55 ops/sec ±1.19% (6 runs sampled) setup.js:21
-array.map x 1.74 ops/sec ±10.61% (8 runs sampled) setup.js:21
-array.$map x 0.56 ops/sec ±0.60% (6 runs sampled) setup.js:21
-powerArray.map x 0.23 ops/sec ±6.50% (5 runs sampled) setup.js:21
-boostArray.$map x 0.54 ops/sec ±2.87% (6 runs sampled) setup.js:21
-fast.map x 7.81 ops/sec ±36.81% (12 runs sampled) setup.js:21
-underscore.map x 4.84 ops/sec ±34.38% (13 runs sampled) setup.js:21
-lodash.map x 5.34 ops/sec ±33.12% (14 runs sampled) setup.js:21
-ramda.map x 5.25 ops/sec ±33.68% (14 runs sampled) setup.js:21
-Fastest is fast.map,lodash.map,ramda.map,underscore.map 
+for loop x 0.54 ops/sec ±2.94% (6 runs sampled)
+while x 0.55 ops/sec ±1.19% (6 runs sampled)
+array.map x 1.74 ops/sec ±10.61% (8 runs sampled)
+array.$map x 0.56 ops/sec ±0.60% (6 runs sampled)
+powerArray.map x 0.23 ops/sec ±6.50% (5 runs sampled)
+boostArray.$map x 0.54 ops/sec ±2.87% (6 runs sampled)
+fast.map x 7.81 ops/sec ±36.81% (12 runs sampled)
+underscore.map x 4.84 ops/sec ±34.38% (13 runs sampled)
+lodash.map x 5.34 ops/sec ±33.12% (14 runs sampled)
+ramda.map x 5.25 ops/sec ±33.68% (14 runs sampled)
+Fastest is fast.map,lodash.map,ramda.map,underscore.map
 ```
