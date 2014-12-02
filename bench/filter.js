@@ -1,5 +1,4 @@
-
-(function() {
+(function () {
   'use strict';
 
   var root = (typeof global == 'object') ? global : this;
@@ -8,17 +7,17 @@
 
   var Benchmark = load('benchmark') || root.Benchmark;
 
-  var setup = load('./setup.js')  || root.setup,
-      assert = setup.assert;
+  var setup = load('./setup.js') || root.setup,
+    assert = setup.assert;
 
   var PowerArray = load('PowerArray') || root.PowerArray,
-      BoostArray = load('../lib/BoostArray') || root.BoostArray,
-      fast = load('fast.js') || root.fast,
-      underscore = load('underscore') || root._,
-      lodash = load('lodash') || root.lodash,
-      ramda = load('ramda') || root.R;
+    BoostArray = load('../lib/BoostArray') || root.BoostArray,
+    fast = load('fast.js') || root.fast,
+    underscore = load('underscore') || root._,
+    lodash = load('lodash') || root.lodash,
+    ramda = load('ramda') || root.R;
 
-  BoostArray(Array.prototype);  // Boost the Array prototype
+  BoostArray(Array.prototype); // Boost the Array prototype
 
   var LEN = 1e7;
   var array = setup.randomIntArray(LEN);
@@ -32,18 +31,19 @@
   var testResults = array.filter(filterFn);
 
   function check(result) {
-    assert(result.length, testResults.length,this);
-    assert(result[0], testResults[0],this);
-    assert(result[testResults.length-1], testResults[testResults.length-1],this);
+    assert(result.length, testResults.length, this);
+    assert(result[0], testResults[0], this);
+    assert(result[testResults.length - 1], testResults[testResults.length - 1], this);
   }
 
   var suite = new Benchmark.Suite('filter');
 
   suite
 
-  .add('for loop', function() {
+    .add('for loop', function () {
 
-    var r = [], ri = -1;
+    var r = [],
+      ri = -1;
 
     for (var i = 0, len = array.length; i < len; i++) {
       var value = array[i];
@@ -56,11 +56,12 @@
 
   })
 
-  .add('while', function() {
+  .add('while', function () {
 
     var len = array.length,
-        r = [], ri = -1,
-        i = -1;
+      r = [],
+      ri = -1,
+      i = -1;
 
     while (++i < len) {
       var value = array[i];
@@ -73,43 +74,43 @@
 
   })
 
-  .add('array.filter', function() {
+  .add('array.filter', function () {
     var r = array.filter(filterFn);
     check.call(this, r);
   })
 
-  .add('array.$filter', function() {
+  .add('array.$filter', function () {
     var r = array.$filter(filterFn);
     check.call(this, r);
   })
 
-  .add('powerArray.filter', function() {
+  .add('powerArray.filter', function () {
     var r = parray.filter(filterFn);
     check.call(this, r);
   })
 
-  .add('boostArray.$filter', function() {
+  .add('boostArray.$filter', function () {
     var r = barray.$filter(filterFn);
     check.call(this, r);
   })
 
-  .add('fast.filter', function() {
-    var r = fast.filter(array,filterFn);
+  .add('fast.filter', function () {
+    var r = fast.filter(array, filterFn);
     check.call(this, r);
   })
 
-  .add('underscore.filter', function() {
-    var r = underscore.filter(array,filterFn);
+  .add('underscore.filter', function () {
+    var r = underscore.filter(array, filterFn);
     check.call(this, r);
   })
 
-  .add('lodash.filter', function() {
-    var r = lodash.filter(array,filterFn);
+  .add('lodash.filter', function () {
+    var r = lodash.filter(array, filterFn);
     check.call(this, r);
   })
 
-  .add('ramda.filter', function() {
-    var r = ramda.filter(filterFn,array);
+  .add('ramda.filter', function () {
+    var r = ramda.filter(filterFn, array);
     check.call(this, r);
   });
 
