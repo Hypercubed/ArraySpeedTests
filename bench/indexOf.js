@@ -27,21 +27,19 @@
   };
 
   var LEN = 1e7;
+
   var array = setup.randomIntArray(LEN);
+  array[5e6] = 'fizz';
+
   var parray = new PowerArray(array);
-  //var iarray = new Uint16Array(array);
   var barray = BoostArray(array.slice(0));
 
-  function reduceFn(p, i) {
-    return p+i;
-  };
+  var testIndex = array.indexOf('fizz');
   function check(r) {
-    assert(r,testSum,this);
+    assert(r,testIndex,this);
   }
 
-  var testSum = array.reduce(reduceFn,0);
-
-  var suite = new Benchmark.Suite('reduce (sum)');
+  var suite = new Benchmark.Suite('indexOf');
 
   suite
     .add('for loop', function() {
@@ -50,7 +48,10 @@
           len = array.length;
 
       for (; i < len; i++) {
-        r = reduceFn(r, array[i]);
+        if (array[i] === 'fizz') {
+          r = i;
+          break;
+        }
       }
       check.call(this,r);
     })
@@ -61,46 +62,46 @@
           len = array.length;
 
       while (++i < len) {
-        r = reduceFn(r, array[i]);
+        if (array[i] === 'fizz') {
+          r = i;
+          break;
+        }
       }
       check.call(this,r);
     })
 
-    .add('array.reduce', function() {
-      var r = array.reduce(reduceFn,0);
+    .add('array.indexOf', function() {
+      var r = array.indexOf('fizz');
       check.call(this,r);
     })
 
-    .add('powerArray.forEach', function() {
-      var r = 0;
-      parray.forEach(function (i) {
-        r += i;
-      });
+    .add('powerArray.indexOf', function() {
+      var r = parray.indexOf('fizz');
       check.call(this,r);
     })
 
-    .add('boostArray.$reduce', function() {
-      var r = barray.$reduce(reduceFn,0);
+    .add('boostArray.$indexOf', function() {
+      var r = barray.$indexOf('fizz');
       check.call(this,r);
     })
 
-    .add('fast.reduce', function() {
-      var r = fast.reduce(array,reduceFn, 0);
+    .add('fast.indexOf', function() {
+      var r = fast.indexOf(array,'fizz');
       check.call(this,r);
     })
 
-    .add('underscore.reduce', function() {
-      var r = underscore.reduce(array,reduceFn,0);
+    .add('underscore.indexOf', function() {
+      var r = underscore.indexOf(array,'fizz');
       check.call(this,r);
     })
 
-    .add('lodash.reduce', function() {
-      var r = lodash.reduce(array,reduceFn,0);
+    .add('lodash.indexOf', function() {
+      var r = lodash.indexOf(array,'fizz');
       check.call(this,r);
     })
 
-    .add('ramda.reduce', function() {
-      var r = ramda.reduce(reduceFn,0,array);
+    .add('ramda.indexOf', function() {
+      var r = ramda.indexOf('fizz',array);
       check.call(this,r);
     });
 

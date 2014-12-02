@@ -11,13 +11,11 @@
     assert = setup.assert;
 
   var PowerArray = load('PowerArray') || root.PowerArray,
-    BoostArray = load('../lib/BoostArray') || root.BoostArray,
+    BoostArray = load('BoostArray') || root.BoostArray,
     fast = load('fast.js') || root.fast,
     underscore = load('underscore') || root._,
     lodash = load('lodash') || root.lodash,
     ramda = load('ramda') || root.R;
-
-  BoostArray(Array.prototype); // Boost the Array prototype
 
   var LEN = 1e7;
   var array = setup.randomIntArray(LEN);
@@ -40,7 +38,7 @@
 
   suite
 
-    .add('for loop', function () {
+  .add('for loop', function () {
 
     var r = [],
       ri = -1;
@@ -65,7 +63,7 @@
 
     while (++i < len) {
       var value = array[i];
-      if (filterFn(array[i])) {
+      if (filterFn(value)) {
         r[++ri] = value;
       }
     }
@@ -76,11 +74,6 @@
 
   .add('array.filter', function () {
     var r = array.filter(filterFn);
-    check.call(this, r);
-  })
-
-  .add('array.$filter', function () {
-    var r = array.$filter(filterFn);
     check.call(this, r);
   })
 

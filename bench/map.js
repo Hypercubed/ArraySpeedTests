@@ -12,13 +12,11 @@
       assert = setup.assert;
 
   var PowerArray = load('PowerArray') || root.PowerArray,
-      BoostArray = load('../lib/BoostArray') || root.BoostArray,
+      BoostArray = load('BoostArray') || root.BoostArray,
       fast = load('fast.js') || root.fast,
       underscore = load('underscore') || root._,
       lodash = load('lodash') || root.lodash,
       ramda = load('ramda') || root.R;
-
-  BoostArray(Array.prototype);  // Boost the Array prototype
 
   var LEN = 1e7;
   var array = setup.randomIntArray(LEN);
@@ -65,11 +63,6 @@
 
     .add('array.map', function() {
       var r = array.map(mapFn);
-      check.call(this,r);
-    })
-
-    .add('array.$map', function() {
-      var r = array.$map(mapFn);
       check.call(this,r);
     })
 

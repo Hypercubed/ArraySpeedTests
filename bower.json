@@ -20,6 +20,7 @@
     "underscore": "~1.7.0",
     "fast.js": "~0.1.1",
     "PowerArray": "techfort/PowerArray",
+    "BoostArray": "Hypercubed/BoostArray",
     "ramda": "~0.8.0"
   },
   "overrides": {
