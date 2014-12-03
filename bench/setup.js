@@ -1,7 +1,5 @@
 (function() {
-  'use strict';
 
-  var root = this;
   var DEBUG = true;
 
   var root = (typeof global == 'object') ? global : this;
@@ -9,6 +7,10 @@
   var load = (typeof require == 'function' && !amd) ? require : function () {};
 
   var R = load('ramda') || root.R;
+
+  var progress = (typeof require !== 'function' || amd) ? function(s) { console.log(s); } : function (s) {
+    process.stdout.write(s+'\033[0G');
+  };
 
   var setup = function(suite) {
 
@@ -28,7 +30,7 @@
         console.log('Fastest is ' + this.filter('fastest').pluck('name'));
       });
 
-  }
+  };
 
   setup.randomIntArray = R.memoize(function randomIntArray(LEN) {
     var i,
@@ -40,7 +42,7 @@
 
       var p = i/LEN*100;
       if (DEBUG && p % 10 === 0) {
-        console.log(p+'% complete');
+        progress('Setup '+p+'% complete');
       }
     }
 
@@ -62,7 +64,8 @@
     }
   }
   else {
-    root.setup = setup;
+    root.arraySpeedTest = root.arraySpeedTest || {};
+    root.arraySpeedTest.setup = setup;
   }
 
 }).call(this);

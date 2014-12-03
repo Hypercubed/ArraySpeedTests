@@ -8,39 +8,43 @@
 
   var Benchmark = load('benchmark') || root.Benchmark;
 
-  var setup = load('./setup.js')  || root.setup,
+  var setup = load('./setup.js')  || root.arraySpeedTest.setup,
       assert = setup.assert;
 
   var PowerArray = load('PowerArray') || root.PowerArray,
-      BoostArray = load('BoostArray') || root.BoostArray,
+      boostArray = load('BoostArray') || root.BoostArray,
       fast = load('fast.js') || root.fast,
       underscore = load('underscore') || root._,
       lodash = load('lodash') || root.lodash,
       ramda = load('ramda') || root.R;
 
   var LEN = 1e7;
-  var array = setup.randomIntArray(LEN);
-  var parray = new PowerArray(array);
-  var barray = BoostArray(array.slice(0));
+  var array, parray, barray;
 
-  var counter = 0;
+  var called = 0;
   function eachFn(i) {
     i * Math.floor(Math.random() * 100 + 1);
-    counter++;
-  };
-  function check() {
-    assert(counter,LEN,this);
+    called++;
+  }
+  function check(test) {
+    assert(called,LEN,test);
+    called = 0;
   }
 
   var suite = new Benchmark.Suite('forEach');
 
-  suite
+  setup(suite)
+    .on('start', function() {
+      array = setup.randomIntArray(LEN);
+      parray = new PowerArray(array);
+      barray = boostArray(array.slice(0));
+    })
+
     .add('for loop', function() {
-        counter = 0;
         for (var i = 0, len = array.length; i < len; i++) {
           eachFn(array[i]);
         }
-        check.call(this);
+        check(this);
     })
 
     .add('while', function() {
@@ -48,55 +52,56 @@
       var i = -1,
           len = array.length;
 
-      counter = 0;
       while (++i < len) {
         eachFn(array[i]);
       }
-      check.call(this);
+      check(this);
 
     })
 
     .add('array.forEach', function() {
-      counter = 0;
       array.forEach(eachFn);
-      check.call(this);
+      check(this);
     })
 
     .add('powerArray.forEach', function() {
-      counter = 0;
       parray.forEach(eachFn);
-      check.call(this);
+      check(this);
     })
 
     .add('boostArray.$forEach', function() {
-      counter = 0;
       barray.$forEach(eachFn);
-      check.call(this);
+      check(this);
     })
     .add('fast.forEach', function() {
-      counter = 0;
       fast.forEach(array,eachFn);
-      check.call(this);
+      check(this);
     })
 
     .add('underscore.forEach', function() {
-      counter = 0;
       underscore.forEach(array,eachFn);
-      check.call(this);
+      check(this);
     })
 
     .add('lodash.forEach', function() {
-      counter = 0;
       lodash.forEach(array,eachFn);
-      check.call(this);
+      check(this);
     })
 
     .add('ramda.forEach', function() {
-      counter = 0;
       ramda.forEach(eachFn, array);
-      check.call(this);
+      check(this);
     });
 
-  setup(suite).run();
+  if( typeof exports !== 'undefined' ) {
+    if(module === require.main) {
+      suite.run();
+    } else {
+      module.exports = suite;
+    }
+  }
+  else {
+    root.arraySpeedTest[suite.name] = suite;
+  }
 
 }).call(this);

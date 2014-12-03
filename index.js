@@ -1,5 +1,5 @@
-require('./bench/filter.js');
-require('./bench/forEach.js');
-require('./bench/reduce.js');
-require('./bench/map.js');
-require('./bench/indexOf.js');
+require('./bench/filter.js').run();
+require('./bench/forEach.js').run();
+require('./bench/reduce.js').run();
+require('./bench/map.js').run();
+require('./bench/indexOf.js').run();

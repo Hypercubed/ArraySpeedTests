@@ -27,10 +27,18 @@
 
   <script src="bench/setup.js"></script>
   <script src="bench/indexOf.js"></script>
-  <!-- script src="bench/forEach.js"></script>
+  <script src="bench/forEach.js"></script>
   <script src="bench/filter.js"></script>
   <script src="bench/reduce.js"></script>
-  <script src="bench/map.js"></script  -->
+  <script src="bench/map.js"></script>
+
+  <script>
+    arraySpeedTest.filter.run();
+    arraySpeedTest.forEach.run();
+    arraySpeedTest.reduce.run();
+    arraySpeedTest.map.run();
+    arraySpeedTest.indexOf.run();
+  </script>
 
 </body>
 </html>

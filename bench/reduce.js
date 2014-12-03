@@ -8,42 +8,37 @@
 
   var Benchmark = load('benchmark') || root.Benchmark;
 
-  var setup = load('./setup.js')  || root.setup,
+  var setup = load('./setup.js')  || root.arraySpeedTest.setup,
       assert = setup.assert;
 
   var PowerArray = load('PowerArray') || root.PowerArray,
-      BoostArray = load('BoostArray') || root.BoostArray,
+      boostArray = load('BoostArray') || root.BoostArray,
       fast = load('fast.js') || root.fast,
       underscore = load('underscore') || root._,
       lodash = load('lodash') || root.lodash,
       ramda = load('ramda') || root.R;
 
-  BoostArray(Array.prototype);  // Boost the Array prototype
-
-  var assert = load('assert') || function fail(actual, expected, message) {
-    if (actual !== expected) {
-      throw message || 'error';
-    }
-  };
-
-  var LEN = 1e7;
-  var array = setup.randomIntArray(LEN);
-  var parray = new PowerArray(array);
-  //var iarray = new Uint16Array(array);
-  var barray = BoostArray(array.slice(0));
+  var LEN = 1e7, testSum;
+  var array, parray, barray;
 
   function reduceFn(p, i) {
     return p+i;
-  };
-  function check(r) {
-    assert(r,testSum,this);
+  }
+  function check(test,r) {
+    assert(r,testSum,test);
   }
 
-  var testSum = array.reduce(reduceFn,0);
+  var suite = new Benchmark.Suite('reduce');
 
-  var suite = new Benchmark.Suite('reduce (sum)');
+  setup(suite)
+    .on('start', function() {
+      array = setup.randomIntArray(LEN);
+      parray = new PowerArray(array);
+      barray = boostArray(array.slice(0));
 
-  suite
+      testSum = array.reduce(reduceFn,0);
+    })
+
     .add('for loop', function() {
 
       var i = 0, r = 0,
@@ -52,7 +47,7 @@
       for (; i < len; i++) {
         r = reduceFn(r, array[i]);
       }
-      check.call(this,r);
+      check(this,r);
     })
 
     .add('while', function() {
@@ -63,12 +58,12 @@
       while (++i < len) {
         r = reduceFn(r, array[i]);
       }
-      check.call(this,r);
+      check(this,r);
     })
 
     .add('array.reduce', function() {
       var r = array.reduce(reduceFn,0);
-      check.call(this,r);
+      check(this,r);
     })
 
     .add('powerArray.forEach', function() {
@@ -76,34 +71,43 @@
       parray.forEach(function (i) {
         r += i;
       });
-      check.call(this,r);
+      check(this,r);
     })
 
     .add('boostArray.$reduce', function() {
       var r = barray.$reduce(reduceFn,0);
-      check.call(this,r);
+      check(this,r);
     })
 
     .add('fast.reduce', function() {
       var r = fast.reduce(array,reduceFn, 0);
-      check.call(this,r);
+      check(this,r);
     })
 
     .add('underscore.reduce', function() {
       var r = underscore.reduce(array,reduceFn,0);
-      check.call(this,r);
+      check(this,r);
     })
 
     .add('lodash.reduce', function() {
       var r = lodash.reduce(array,reduceFn,0);
-      check.call(this,r);
+      check(this,r);
     })
 
     .add('ramda.reduce', function() {
       var r = ramda.reduce(reduceFn,0,array);
-      check.call(this,r);
+      check(this,r);
     });
 
-  setup(suite).run();
+  if( typeof exports !== 'undefined' ) {
+    if(module === require.main) {
+      suite.run();
+    } else {
+      module.exports = suite;
+    }
+  }
+  else {
+    root.arraySpeedTest[suite.name] = suite;
+  }
 
 }).call(this);

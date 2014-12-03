@@ -1,3 +1,5 @@
+
+
 (function () {
   'use strict';
 
@@ -7,38 +9,49 @@
 
   var Benchmark = load('benchmark') || root.Benchmark;
 
-  var setup = load('./setup.js') || root.setup,
+  var setup = load('./setup.js') || root.arraySpeedTest.setup,
     assert = setup.assert;
 
   var PowerArray = load('PowerArray') || root.PowerArray,
-    BoostArray = load('BoostArray') || root.BoostArray,
+    boostArray = load('BoostArray') || root.BoostArray,
     fast = load('fast.js') || root.fast,
     underscore = load('underscore') || root._,
     lodash = load('lodash') || root.lodash,
     ramda = load('ramda') || root.R;
 
   var LEN = 1e7;
-  var array = setup.randomIntArray(LEN);
-  var parray = new PowerArray(array);
-  var barray = BoostArray(array.slice(0));
+  var array, parray, barray;
 
   function filterFn(i) {
+    called++;
     return i % 3 === 0 || i % 5 === 0;
-  };
+  }
 
-  var testResults = array.filter(filterFn);
+  var testResults, called = 0;
 
-  function check(result) {
-    assert(result.length, testResults.length, this);
-    assert(result[0], testResults[0], this);
-    assert(result[testResults.length - 1], testResults[testResults.length - 1], this);
+  function check(test, result) {
+    assert(called, LEN, test);
+    assert(result.length, testResults.length, test);
+    assert(result[0], testResults[0], test);
+    assert(result[testResults.length - 1], testResults[testResults.length - 1], test);
+    called = 0;
   }
 
   var suite = new Benchmark.Suite('filter');
 
-  suite
+  setup(suite)
+
+  .on('start', function() {
+    array = setup.randomIntArray(LEN);
+    parray = new PowerArray(array);
+    barray = boostArray(array.slice(0));
+
+    testResults = array.filter(filterFn);
+  })
 
   .add('for loop', function () {
+
+    called = 0;
 
     var r = [],
       ri = -1;
@@ -50,7 +63,7 @@
       }
     }
 
-    check.call(this, r);
+    check(this, r);
 
   })
 
@@ -68,45 +81,54 @@
       }
     }
 
-    check.call(this, r);
+    check(this, r);
 
   })
 
   .add('array.filter', function () {
     var r = array.filter(filterFn);
-    check.call(this, r);
+    check(this, r);
   })
 
   .add('powerArray.filter', function () {
     var r = parray.filter(filterFn);
-    check.call(this, r);
+    check(this, r);
   })
 
   .add('boostArray.$filter', function () {
     var r = barray.$filter(filterFn);
-    check.call(this, r);
+    check(this, r);
   })
 
   .add('fast.filter', function () {
     var r = fast.filter(array, filterFn);
-    check.call(this, r);
+    check(this, r);
   })
 
   .add('underscore.filter', function () {
     var r = underscore.filter(array, filterFn);
-    check.call(this, r);
+    check(this, r);
   })
 
   .add('lodash.filter', function () {
     var r = lodash.filter(array, filterFn);
-    check.call(this, r);
+    check(this, r);
   })
 
   .add('ramda.filter', function () {
     var r = ramda.filter(filterFn, array);
-    check.call(this, r);
+    check(this, r);
   });
 
-  setup(suite).run();
+  if( typeof exports !== 'undefined' ) {
+    if(module === require.main) {
+      suite.run();
+    } else {
+      module.exports = suite;
+    }
+  }
+  else {
+    root.arraySpeedTest[suite.name] = suite;
+  }
 
 }).call(this);
