@@ -42,9 +42,10 @@
 
       var p = i/LEN*100;
       if (DEBUG && p % 10 === 0) {
-        progress('Setup '+p+'% complete');
+        progress('Generating large array: '+p+'% complete');
       }
     }
+    progress('Generating large array: 100% complete\n');
 
     return array;
   });
@@ -53,8 +54,13 @@
     //console.log(ctx.abort, ctx.error);
     if (actual !== expected) {
       var message = 'Expected '+actual+' to equal '+expected;
-      ctx.error = new Error(message);
-      ctx.abort();
+      var err = new Error(message);
+      if (ctx && ctx.abort) {
+        ctx.error = err;
+        ctx.abort();
+      } else {
+        throw err;
+      }
     }
   };
 
