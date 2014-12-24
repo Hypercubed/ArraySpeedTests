@@ -30,41 +30,30 @@
     assert(r[1.5*LEN-1], rE,test);
   }
 
-  function reset() {
+  function before() {
     array = setup.randomIntArray(LEN);
     array2 = setup.randomIntArray(LEN/2);
-    //parray = new PowerArray(array.slice(0));
+    parray = new PowerArray(array);
     barray = boostArray(array.slice(0));
-    lodash_wrap = lodash(array.slice(0));
-    underscore_wrap = underscore(array.slice(0));
+    lodash_wrap = lodash(array);
+    underscore_wrap = underscore(array);
 
     r0 = array[0];
     rM1 = array[LEN-1];
     rM2 = array2[0];
     rE = array2[LEN/2-1];
+
   }
 
   var suite = new Benchmark.Suite('concat');
 
   setup(suite)
-    .on('cycle', reset)
-    .on('start', reset)
-    //.on('teardown', function() { console.log('teardown'); })
-
-    //.add('mut', function() {
-    //  var r = barray.$concat(array2);
-    //  check(this,r);
-    //})
+    .on('start', before)
 
     .add('array.concat', function() {
       var r = array.concat(array2);
       check(this,r);
     })
-
-    //.add('Array.prototype.concat', function() {
-    //  var r = [].concat.call(array, array2);
-    //  check(this,r);
-    //})
 
     /* .add('for loop', function() {
 
@@ -104,10 +93,10 @@
     }) */
 
     //.add('powerArray.concat', function() {
+      //console.log(parray);
     //  var r = parray.concat(array2);
     //  check(this,r);
-    //})
-
+  //  })
 
     .add('boostArray.concat', function() {
       var r = barray.concat(array2);  // Not boosted

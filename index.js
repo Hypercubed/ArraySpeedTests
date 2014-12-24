@@ -10,7 +10,7 @@ var files = [
 ];
 
 function runNext(code) {
-  if (code == 0 && files.length > 0) {
+  if (code === 0 && files.length > 0) {
     cp
       .fork(files.shift())
       .on('close', runNext);
