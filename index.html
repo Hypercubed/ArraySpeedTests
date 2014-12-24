@@ -9,7 +9,18 @@
 </head>
 <body>
 
-  Open console to see result.
+
+
+  <button onclick="arraySpeedTest.reduce.run()">reduce</button>
+  <button onclick="arraySpeedTest.map.run()">map</button>
+  <button onclick="arraySpeedTest.indexOf.run()">indexOf</button>
+  <button onclick="arraySpeedTest.forEach.run()">forEach</button>
+  <button onclick="arraySpeedTest.filter.run()">filter</button>
+  <button onclick="arraySpeedTest.concat.run()">concat</button>
+
+  <p>
+    Open console to see result.
+  </p>
 
   <!-- bower:js -->
   <script src="bower_components/lodash/dist/lodash.compat.js"></script>
@@ -18,6 +29,7 @@
   <script src="bower_components/PowerArray/index.js"></script>
   <script src="bower_components/BoostArray/BoostArray.js"></script>
   <script src="bower_components/ramda/ramda.js"></script>
+  <script src="bower_components/lazy.js/lazy.js"></script>
   <!-- endbower -->
 
   <script>
@@ -31,14 +43,7 @@
   <script src="bench/filter.js"></script>
   <script src="bench/reduce.js"></script>
   <script src="bench/map.js"></script>
-
-  <script>
-    arraySpeedTest.filter.run();
-    arraySpeedTest.forEach.run();
-    arraySpeedTest.reduce.run();
-    arraySpeedTest.map.run();
-    arraySpeedTest.indexOf.run();
-  </script>
+  <script src="bench/concat.js"></script>
 
 </body>
 </html>

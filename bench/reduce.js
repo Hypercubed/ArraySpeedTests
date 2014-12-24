@@ -16,10 +16,11 @@
       fast = load('fast.js') || root.fast,
       underscore = load('underscore') || root._,
       lodash = load('lodash') || root.lodash,
-      ramda = load('ramda') || root.R;
+      ramda = load('ramda') || root.R,
+      Lazy = load('lazy.js') || root.Lazy;
 
   var LEN = 1e7, testSum;
-  var array, parray, barray;
+  var array, parray, barray, lazy_wrap;
 
   function reduceFn(p, i) {
     return p+i;
@@ -35,8 +36,11 @@
       array = setup.randomIntArray(LEN);
       parray = new PowerArray(array);
       barray = boostArray(array.slice(0));
+      lazy_wrap = Lazy(array);
+
 
       testSum = array.reduce(reduceFn,0);
+
     })
 
     .add('for loop', function() {
@@ -96,6 +100,11 @@
 
     .add('ramda.reduce', function() {
       var r = ramda.reduce(reduceFn,0,array);
+      check(this,r);
+    })
+
+    .add('lazy_wrap.reduce', function() {
+      var r = lazy_wrap.reduce(reduceFn,0);
       check(this,r);
     });
 

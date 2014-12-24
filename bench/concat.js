@@ -16,10 +16,11 @@
       fast = load('fast.js') || root.fast,
       underscore = load('underscore') || root._,
       lodash = load('lodash') || root.lodash,
-      ramda = load('ramda') || root.R;
+      ramda = load('ramda') || root.R,
+      Lazy = load('lazy.js') || root.Lazy;
 
   var LEN = 1e7;
-  var array, array2, parray, barray, lodash_wrap, underscore_wrap;
+  var array, array2, parray, barray, lodash_wrap, underscore_wrap, lazy_wrap;
   var r0,rM1,rM2, rE;
 
   function check(test,r) {
@@ -37,6 +38,7 @@
     barray = boostArray(array.slice(0));
     lodash_wrap = lodash(array);
     underscore_wrap = underscore(array);
+    lazy_wrap = Lazy(array.slice(0));
 
     r0 = array[0];
     rM1 = array[LEN-1];
@@ -54,6 +56,8 @@
       var r = array.concat(array2);
       check(this,r);
     })
+
+
 
     /* .add('for loop', function() {
 
@@ -92,11 +96,10 @@
       check(this,r);
     }) */
 
-    //.add('powerArray.concat', function() {
-      //console.log(parray);
-    //  var r = parray.concat(array2);
-    //  check(this,r);
-  //  })
+    .add('powerArray.concat', function() {
+      var r = parray.concat(array2);
+      check(this,r);
+    })
 
     .add('boostArray.concat', function() {
       var r = barray.concat(array2);  // Not boosted
@@ -120,6 +123,11 @@
 
     .add('ramda.concat', function() {
       var r = ramda.concat(array,array2);
+      check(this,r);
+    })
+
+    .add('lazy_wrap.concat', function() {
+      var r = lazy_wrap.concat(array2).toArray();
       check(this,r);
     });
 

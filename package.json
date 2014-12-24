@@ -10,7 +10,8 @@
     "underscore": "^1.7.0",
     "powerarray": "^0.1.2",
     "ramda": "^0.8.0",
-    "BoostArray": "Hypercubed/BoostArray"
+    "BoostArray": "Hypercubed/BoostArray",
+    "lazy.js": "^0.4.0"
   },
   "devDependencies": {},
   "scripts": {

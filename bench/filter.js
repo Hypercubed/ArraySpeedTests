@@ -17,10 +17,11 @@
     fast = load('fast.js') || root.fast,
     underscore = load('underscore') || root._,
     lodash = load('lodash') || root.lodash,
-    ramda = load('ramda') || root.R;
+    ramda = load('ramda') || root.R,
+    Lazy = load('lazy.js') || root.Lazy;
 
   var LEN = 1e7;
-  var array, parray, barray;
+  var array, parray, barray, lazy_wrap;
 
   function filterFn(i) {
     called++;
@@ -45,6 +46,7 @@
     array = setup.randomIntArray(LEN);
     parray = new PowerArray(array);
     barray = boostArray(array.slice(0));
+    lazy_wrap = Lazy(array.slice(0));
 
     testResults = array.filter(filterFn);
   })
@@ -117,6 +119,11 @@
 
   .add('ramda.filter', function () {
     var r = ramda.filter(filterFn, array);
+    check(this, r);
+  })
+
+  .add('lazy_wrap.filter', function () {
+    var r = lazy_wrap.filter(filterFn).toArray();
     check(this, r);
   });
 

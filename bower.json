@@ -21,7 +21,8 @@
     "fast.js": "~0.1.1",
     "PowerArray": "techfort/PowerArray",
     "BoostArray": "Hypercubed/BoostArray",
-    "ramda": "~0.8.0"
+    "ramda": "~0.8.0",
+    "lazy.js": "~0.4.0"
   },
   "overrides": {
     "benchmark": {

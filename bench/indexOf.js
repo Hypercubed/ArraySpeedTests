@@ -16,12 +16,13 @@
       fast = load('fast.js') || root.fast,
       underscore = load('underscore') || root._,
       lodash = load('lodash') || root.lodash,
-      ramda = load('ramda') || root.R;
+      ramda = load('ramda') || root.R,
+      Lazy = load('lazy.js') || root.Lazy;
 
   var LEN = 1e7,
     testIndex = 5e6;
 
-  var array, parray, barray;
+  var array, parray, barray, lazy_wrap;
 
   function check(test, r) {
     assert(r,testIndex,test);
@@ -35,7 +36,9 @@
       array[testIndex] = 'fizz';
       parray = new PowerArray(array);
       barray = boostArray(array.slice(0));
+      lazy_wrap = Lazy(array.slice(0));
     })
+
     .add('for loop', function() {
 
       var i = 0,
@@ -94,6 +97,11 @@
 
     .add('ramda.indexOf', function() {
       var r = ramda.indexOf('fizz',array);
+      check(this,r);
+    })
+
+    .add('lazy_wrap.indexOf', function() {
+      var r = lazy_wrap.indexOf('fizz');
       check(this,r);
     });
 

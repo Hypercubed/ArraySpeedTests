@@ -16,10 +16,11 @@
       fast = load('fast.js') || root.fast,
       underscore = load('underscore') || root._,
       lodash = load('lodash') || root.lodash,
-      ramda = load('ramda') || root.R;
+      ramda = load('ramda') || root.R,
+      Lazy = load('lazy.js') || root.Lazy;
 
   var LEN = 1e7;
-  var array, parray, barray;
+  var array, parray, barray, lazy_wrap;
 
   function mapFn(i) {
     return i * 2;
@@ -39,7 +40,10 @@
       array = setup.randomIntArray(LEN);
       parray = new PowerArray(array);
       barray = boostArray(array.slice(0));
+      lazy_wrap = Lazy(array.slice(0));
+
     })
+
     .add('for loop', function() {
 
       var len = array.length,
@@ -97,6 +101,11 @@
 
     .add('ramda.map', function() {
       var r = ramda.map(mapFn,array);
+      check(this,r);
+    })
+
+    .add('lazy_wrap.map', function() {
+      var r = lazy_wrap.map(mapFn).toArray();
       check(this,r);
     });
 
