@@ -1,8 +1,8 @@
 {
   "name": "ArraySpeed",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
-  "main": " ",
+  "main": "",
   "dependencies": {
     "benchmark": "^1.0.0",
     "fast.js": "^0.1.1",
@@ -13,15 +13,31 @@
     "BoostArray": "Hypercubed/BoostArray",
     "lazy.js": "^0.4.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "chuhai": "^1.0.0",
+    "process": "^0.11.3",
+    "testling": "^1.7.1",
+    "xo": "^0.15.1"
+  },
   "scripts": {
     "test": "node index.js",
-    "wiredep": "wiredep -s ./index.html"
+    "test:browser": "browserify index2.js | testling -x open"
   },
   "repository": {
     "type": "git",
     "url": "git@gist.github.com:/65c00b905fecd83e674e.git"
   },
-  "author": "",
-  "license": "MIT"
+  "author": "J. Harshbarger",
+  "license": "MIT",
+  "xo": {
+    "space": 2,
+    "envs": [
+      "node",
+      "browser"
+    ],
+    "ignores": [
+      "subjects/eventdispatcher.js"
+    ]
+  }
 }

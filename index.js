@@ -1,13 +1,17 @@
 var cp = require('child_process');
 
 var files = [
-  './bench/reduce.js',
-  './bench/map.js',
-  './bench/indexOf.js',
-  './bench/forEach.js',
-  './bench/filter.js',
-  './bench/concat.js'
+  './benchmarks/reduce.js',
+  './benchmarks/map.js',
+  './benchmarks/index-of.js',
+  './benchmarks/for-each.js',
+  './benchmarks/filter.js',
+  './benchmarks/concat.js'
 ];
+
+var platform = require('platform');
+console.log('# ' + platform.description);
+console.log('');
 
 function runNext(code) {
   if (code === 0 && files.length > 0) {
